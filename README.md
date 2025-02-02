@@ -4,8 +4,19 @@ This is a simple chat interface for the Mistral 7B model.
 
 ## Installation
 
+Macbook
+
 ```bash
 CMAKE_ARGS="-DLLAMA_METAL=on" pip install llama-cpp-python --no-cache-dir
+```
+
+Linux GPU
+
+```bash
+CMAKE_ARGS="-DLLAMA_CUBLAS=on" pip install llama-cpp-python --no-cache-dir
+```
+
+```bash
 wget https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF/resolve/main/mistral-7b-v0.1.Q4_K_M.gguf
 pip install -r requirements.txt
 ```
