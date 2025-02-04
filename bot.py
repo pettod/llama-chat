@@ -9,6 +9,7 @@ class WebNavigator:
     def __init__(self):
         self.driver = webdriver.Chrome()
         self.wait = WebDriverWait(self.driver, 10)
+        self.message_count = 0
     
     def navigate_to(self, url):
         """Navigate to a given URL"""
@@ -49,17 +50,18 @@ class WebNavigator:
         except TimeoutException:
             print(f"Could not find element: {selector}")
             return None
-            
-    def wait_for_element(self, selector, by=By.CSS_SELECTOR, timeout=10):
-        """Wait for an element to appear on the page"""
+
+    def wait_for_new_message(self):
+        """Wait for a new message to appear"""
+        current_messages = len(self.driver.find_elements(By.CSS_SELECTOR, ".bot-message"))
         try:
-            element = WebDriverWait(self.driver, timeout).until(
-                EC.presence_of_element_located((by, selector))
+            WebDriverWait(self.driver, 100).until(
+                lambda driver: len(driver.find_elements(By.CSS_SELECTOR, ".bot-message")) > current_messages
             )
-            return element
+            return True
         except TimeoutException:
-            print(f"Element not found after {timeout} seconds: {selector}")
-            return None
+            print("No new message appeared")
+            return False
     
     def close(self):
         """Close the browser"""
@@ -81,7 +83,7 @@ if __name__ == "__main__":
     bot_1.click_element("button")
 
     # Wait for and get the response
-    bot_1.wait_for_element(".bot-message")
+    bot_1.wait_for_new_message()
     response_1 = bot_1.get_text(".bot-message")
     print(f"Bot_1 response: {response_1}")
 
@@ -90,14 +92,14 @@ if __name__ == "__main__":
         # Bot 2 reads Bot 1's response and replies
         bot_2.input_text("#user-input", f"{response_1}")
         bot_2.click_element("button")
-        bot_2.wait_for_element(".bot-message")
+        bot_2.wait_for_new_message()
         response_2 = bot_2.get_text(".bot-message")
         print(f"Bot_2 response: {response_2}")
 
         # Bot 1 reads Bot 2's response and replies
         bot_1.input_text("#user-input", f"{response_2}")
         bot_1.click_element("button")
-        bot_1.wait_for_element(".bot-message")
+        bot_1.wait_for_new_message()
         response_1 = bot_1.get_text(".bot-message")
         print(f"Bot_1 response: {response_1}")
 
