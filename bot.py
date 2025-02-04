@@ -67,28 +67,40 @@ class WebNavigator:
 
 # Example usage:
 if __name__ == "__main__":
-    bot = WebNavigator()
-    
+    bot_1 = WebNavigator()
+    bot_2 = WebNavigator()
+
     # Navigate to a website
-    bot.navigate_to("http://localhost:8080")
-    time.sleep(1)
+    bot_1.navigate_to("http://localhost:8080")
+    bot_2.navigate_to("http://localhost:8080")
     
     # Input text into the chat
-    bot.input_text("#user-input", "Hello!")
-    time.sleep(1)
+    bot_1.input_text("#user-input", "Hello!")
     
     # Click the send button
-    bot.click_element("button")
+    bot_1.click_element("button")
 
     # Wait for and get the response
-    response = bot.get_text(".bot-message")
-    print(f"Bot response: {response}")
+    bot_1.wait_for_element(".bot-message")
+    response_1 = bot_1.get_text(".bot-message")
+    print(f"Bot_1 response: {response_1}")
 
-    # Input text into the chat
-    bot.input_text("#user-input", "I'm doing well, thank you!")
-    
-    # Click the send button
-    bot.click_element("button")
+    # Make the bots chat with each other in a loop
+    for i in range(5):  # Have 5 back-and-forth exchanges
+        # Bot 2 reads Bot 1's response and replies
+        bot_2.input_text("#user-input", f"{response_1}")
+        bot_2.click_element("button")
+        bot_2.wait_for_element(".bot-message")
+        response_2 = bot_2.get_text(".bot-message")
+        print(f"Bot_2 response: {response_2}")
 
-    time.sleep(5)    
-    bot.close()
+        # Bot 1 reads Bot 2's response and replies
+        bot_1.input_text("#user-input", f"{response_2}")
+        bot_1.click_element("button")
+        bot_1.wait_for_element(".bot-message")
+        response_1 = bot_1.get_text(".bot-message")
+        print(f"Bot_1 response: {response_1}")
+
+    time.sleep(3)
+    bot_2.close()
+    bot_1.close()
