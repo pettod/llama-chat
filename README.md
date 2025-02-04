@@ -1,6 +1,6 @@
 # Mistral Chat Interface
 
-<video src='https://www.youtube.com/watch?v=x3Zh_afIMIQ' width=540/></video>
+<video src='https://github.com/user-attachments/assets/4f72b543-1967-4c70-a8f7-c63f44657203' width=540/></video>
 
 This is a simple chat interface for the Mistral 7B model.
 
