@@ -8,7 +8,7 @@ import time
 class WebNavigator:
     def __init__(self):
         self.driver = webdriver.Chrome()
-        self.wait = WebDriverWait(self.driver, 10)
+        self.wait = WebDriverWait(self.driver, 100)
         self.message_count = 0
     
     def navigate_to(self, url):
@@ -62,6 +62,13 @@ class WebNavigator:
         except TimeoutException:
             print("No new message appeared")
             return False
+            
+    def get_last_message(self):
+        """Get the last bot message"""
+        messages = self.driver.find_elements(By.CSS_SELECTOR, ".bot-message")
+        if messages:
+            return messages[-1].text
+        return None
     
     def close(self):
         """Close the browser"""
@@ -84,7 +91,7 @@ if __name__ == "__main__":
 
     # Wait for and get the response
     bot_1.wait_for_new_message()
-    response_1 = bot_1.get_text(".bot-message")
+    response_1 = bot_1.get_last_message()
     print(f"Bot_1 response: {response_1}")
 
     # Make the bots chat with each other in a loop
@@ -93,14 +100,14 @@ if __name__ == "__main__":
         bot_2.input_text("#user-input", f"{response_1}")
         bot_2.click_element("button")
         bot_2.wait_for_new_message()
-        response_2 = bot_2.get_text(".bot-message")
+        response_2 = bot_2.get_last_message()
         print(f"Bot_2 response: {response_2}")
 
         # Bot 1 reads Bot 2's response and replies
         bot_1.input_text("#user-input", f"{response_2}")
         bot_1.click_element("button")
         bot_1.wait_for_new_message()
-        response_1 = bot_1.get_text(".bot-message")
+        response_1 = bot_1.get_last_message()
         print(f"Bot_1 response: {response_1}")
 
     time.sleep(3)
