@@ -84,7 +84,9 @@ if __name__ == "__main__":
     bot_2.navigate_to("http://localhost:8080")
     
     # Input text into the chat
-    bot_1.input_text("#user-input", "Hello!")
+    time.sleep(4)
+    bot_1.input_text("#user-input", "Tell me a joke")
+    time.sleep(1)
     
     # Click the send button
     bot_1.click_element("button")
@@ -95,7 +97,7 @@ if __name__ == "__main__":
     print(f"Bot_1 response: {response_1}")
 
     # Make the bots chat with each other in a loop
-    for i in range(5):  # Have 5 back-and-forth exchanges
+    for i in range(2):  # Have 5 back-and-forth exchanges
         # Bot 2 reads Bot 1's response and replies
         bot_2.input_text("#user-input", f"{response_1}")
         bot_2.click_element("button")
