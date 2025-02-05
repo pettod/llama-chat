@@ -18,12 +18,12 @@ def chat():
     message = request.json.get('message', '')
     
     # Format prompt for Mistral instruct model
-    prompt = f"""<s>[INST] {message} [/INST]"""
+    prompt = f"""<s>[INST] Please provide a brief response that keeps the conversation going in 1-3 sentences: {message} [/INST]"""
     
     # Generate response
     output = llm(
         prompt,
-        max_tokens=2048,
+        max_tokens=256,  # Reduced for shorter responses
         temperature=0.7,
         stop=["</s>", "[INST]"],  # Stop at end of response or new instruction
         echo=False  # Don't include prompt in output

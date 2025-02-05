@@ -76,6 +76,7 @@ class WebNavigator:
 
 # Example usage:
 if __name__ == "__main__":
+    first_prompt = input("Enter the first prompt: ")
     bot_1 = WebNavigator()
     bot_2 = WebNavigator()
 
@@ -85,7 +86,7 @@ if __name__ == "__main__":
     
     # Input text into the chat
     time.sleep(4)
-    bot_1.input_text("#user-input", "Tell me a joke")
+    bot_1.input_text("#user-input", first_prompt)
     time.sleep(1)
     
     # Click the send button
