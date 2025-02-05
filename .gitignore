@@ -1,2 +1,4 @@
 *.gguf
 *.wav
+
+__pycache__/

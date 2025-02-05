@@ -11,7 +11,7 @@ llm = Llama(
 
 @route('/')
 def index():
-    return static_file('index.html', root='.')
+    return static_file('index_chat.html', root='.')
 
 @route('/chat', method='POST')
 def chat():

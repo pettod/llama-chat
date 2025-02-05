@@ -23,10 +23,17 @@ wget https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF/resolve/main/mistral-7
 pip install -r requirements.txt
 ```
 
+Better model is here: https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2
+
+```bash
+huggingface-cli download TheBloke/Mistral-7B-Instruct-v0.2-GGUF mistral-7b-instruct-v0.2.Q4_K_M.gguf --local-dir . --local-dir-use-symlinks False
+```
+
 ## Usage
 
 ```bash
-python main.py
+python backend_chat.py
+python bot.py
 ```
 
 [http://localhost:8080](http://localhost:8080)
